@@ -103,3 +103,14 @@ input[type="submit"] {
   float: left;
   padding-right: 10px;
 }
+
+/* Alert */
+
+.alert {
+  background: #dd516c;
+  color: white;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  display: none;
+}

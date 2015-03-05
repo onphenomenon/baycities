@@ -7,7 +7,7 @@ $(function(){
     var list = [];
     var content, city;
     for(var i in cities){
-      city = cities[i][0];
+      city = cities[i];
       content = '<a href="/cities/'+city+'">'+city+"</a>"+
       '<a href="#" data-city="'+city+'"><img src="delete.jpeg"></a>';
       list.push($('<li>', {html: content }));
@@ -25,13 +25,18 @@ $(function(){
 
     $.ajax({
       type: 'POST', url:'/cities', data: cityData
-    }).done(function(cityName){
+    })
+    .error(function(){
+      $('.alert').show();
+    })
+    .success(function(cityName){
       appendToList([cityName]);
       form.trigger('reset');
-    })
-  })
+    });
+  });
+
   //event handler
-  $('.city-list').on('click', 'a[data-city]', function(event){
+  $('.city-list').on('click', 'a[data-city]', function (event) {
     if(!confirm('Are you sure ?')){
       return false;
     }
@@ -39,18 +44,12 @@ $(function(){
     var target = $(event.currentTarget);
 
     $.ajax({
-      type: 'DELETE', url: '/cities/'+ target.data('city')
-    }).done(function(){
+      type: 'DELETE',
+      url: '/cities/' + target.data('city')
+    }).done(function () {
       target.parents('li').remove();
     });
-
-
-
-
   });
-
-
-
 
 });
 
